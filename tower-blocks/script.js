@@ -268,7 +268,7 @@ class Game {
     addBlock() {
         let lastBlock = this.blocks[this.blocks.length - 1];
         if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
-            setTimeout(() => { telegram.sendData('win'); }, 3000);
+            setTimeout(() => { telegram.sendData((scoreContainer.innerHTML); }, 3000);
             return this.endGame();
             
         }
