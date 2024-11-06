@@ -1,6 +1,23 @@
 "use strict";
 console.clear();
 
+function bg_play() {
+    var background_audio = new Audio('background.mp3')
+    background_audio.volume = 0.4
+    background_audio.play()
+}
+bg_play()
+
+
+function play() {
+    var audios = ['vylet-1.mp3', 'vylet-2.mp3']
+    const random = Math.floor(Math.random() * audios.length);
+    var audio = new Audio(audios[random]);
+    audio.volume = 0.5
+    audio.play();
+  }
+play()
+
 let telegram = window.Telegram.WebApp;
 
 
@@ -169,6 +186,7 @@ class Block {
 }
 class Game {
     constructor() {
+        
         this.STATES = {
             'LOADING': 'loading',
             'PLAYING': 'playing',
@@ -207,8 +225,10 @@ class Game {
             // insta-lose, will figure it out later.
         });
         telegram.expand()
+        
     }
     updateState(newState) {
+        
         for (let key in this.STATES)
             this.mainContainer.classList.remove(this.STATES[key]);
         this.mainContainer.classList.add(newState);
@@ -222,6 +242,7 @@ class Game {
                 break;
             case this.STATES.PLAYING:
                 this.placeBlock();
+                play()
                 break;
             case this.STATES.ENDED:
                 // this.restartGame();
@@ -229,7 +250,7 @@ class Game {
         }
     }
     startGame() {
-        
+        bg_play()
         if (this.state != this.STATES.PLAYING) {
             this.scoreContainer.innerHTML = '0';
             this.updateState(this.STATES.PLAYING);
@@ -286,6 +307,7 @@ class Game {
         
     }
     tick() {
+        
         this.blocks[this.blocks.length - 1].tick();
         this.stage.render();
         requestAnimationFrame(() => { this.tick(); });
