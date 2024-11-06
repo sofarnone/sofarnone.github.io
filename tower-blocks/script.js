@@ -1,19 +1,16 @@
 "use strict";
 console.clear();
+var bg_audio = new Audio('background.mp3')
+bg_audio.volume = 0.15
+bg_audio.loop = true
 
-function bg_play() {
-    var background_audio = new Audio('background.mp3')
-    background_audio.volume = 0.4
-    background_audio.play()
-}
-bg_play()
 
 
 function play() {
     var audios = ['vylet-1.mp3', 'vylet-2.mp3']
     const random = Math.floor(Math.random() * audios.length);
     var audio = new Audio(audios[random]);
-    audio.volume = 0.5
+    audio.volume = 0.35
     audio.play();
   }
 play()
@@ -250,7 +247,7 @@ class Game {
         }
     }
     startGame() {
-        bg_play()
+        bg_audio.play()
         if (this.state != this.STATES.PLAYING) {
             this.scoreContainer.innerHTML = '0';
             this.updateState(this.STATES.PLAYING);
@@ -301,10 +298,12 @@ class Game {
     }
     endGame() {
         let send_score = String(this.scoreContainer.textContent)
+        bg_audio.volume = 0.05
         setTimeout(() => {telegram.sendData(send_score)}, 3000);
         
         this.updateState(this.STATES.ENDED);
         
+
     }
     tick() {
         
